@@ -32,7 +32,7 @@ def main():
             glob.glob(os.path.join(args.input, "*"))
             + glob.glob(os.path.join(args.input, "**", "*"), recursive=True)
         )
-        files = [f for f in files if os.path.splitext(f)[1].lower() in (".csv", ".xlsx", ".txt", ".md", ".pdf")]
+        files = [f for f in files if os.path.splitext(f)[1].lower() in (".csv", ".xlsx", ".txt", ".md", ".pdf", ".docx")]
         files = sorted(set(files))
     else:
         files = [args.input]
@@ -44,12 +44,13 @@ def main():
     quotes = []
     for f in files:
         try:
-            q = parse_any(f)
-            if q.items:
-                quotes.append(q)
-                print(f"  [OK] {q.supplier}: {len(q.items)}项物料 "
-                      f"(货值{sum(i.subtotal for i in q.items):,.2f}元)")
-            else:
+            parsed = parse_any(f)
+            for q in parsed:
+                if q.items:
+                    quotes.append(q)
+                    print(f"  [OK] {q.supplier}: {len(q.items)}项物料 "
+                          f"(货值{sum(i.subtotal for i in q.items):,.2f}元)")
+            if not parsed:
                 print(f"  [!] {os.path.basename(f)}: 未解析出物料，跳过")
         except Exception as e:
             print(f"  [FAIL] {os.path.basename(f)}: {e}")
