@@ -47,12 +47,12 @@ def main():
             q = parse_any(f)
             if q.items:
                 quotes.append(q)
-                print(f"  ✓ {q.supplier}: {len(q.items)}项物料 "
+                print(f"  [OK] {q.supplier}: {len(q.items)}项物料 "
                       f"(货值{sum(i.subtotal for i in q.items):,.2f}元)")
             else:
-                print(f"  ⚠ {os.path.basename(f)}: 未解析出物料，跳过")
+                print(f"  [!] {os.path.basename(f)}: 未解析出物料，跳过")
         except Exception as e:
-            print(f"  ✗ {os.path.basename(f)}: {e}")
+            print(f"  [FAIL] {os.path.basename(f)}: {e}")
     if not quotes:
         print("错误：所有文件解析失败")
         sys.exit(1)
@@ -67,7 +67,7 @@ def main():
     if not args.no_llm:
         print("正在调用LLM生成议价策略…")
         advice = advise(quotes, rows, totals)
-        print("  ✓ 议价策略生成")
+        print("  [OK] 议价策略生成")
 
     # 报告
     out = args.output or os.path.join(

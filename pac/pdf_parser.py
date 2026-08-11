@@ -128,7 +128,7 @@ def parse_pdf(path: str) -> SupplierQuote:
         text, pages = _extract_text_layer(path)
         source_hint = f"文字层{pages}页"
     else:
-        print(f"    → 扫描版，启动OCR（{os.path.getsize(path)/1e6:.1f}MB）…")
+        print(f"    -> 扫描版，启动OCR（{os.path.getsize(path)/1e6:.1f}MB）…")
         text = _ocr_all_pages(path, api_key)
         source_hint = f"扫描版OCR"
 
