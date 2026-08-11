@@ -164,4 +164,7 @@ def parse_any(path: str) -> SupplierQuote:
         return parse_xlsx(path)
     if ext in (".txt", ".md", ".eml"):
         return parse_txt_email(path)
+    if ext == ".pdf":
+        from .pdf_parser import parse_pdf
+        return parse_pdf(path)
     raise ValueError(f"不支持的文件格式: {ext}")

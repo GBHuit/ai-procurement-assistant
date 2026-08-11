@@ -32,7 +32,7 @@ def main():
             glob.glob(os.path.join(args.input, "*"))
             + glob.glob(os.path.join(args.input, "**", "*"), recursive=True)
         )
-        files = [f for f in files if os.path.splitext(f)[1].lower() in (".csv", ".xlsx", ".txt", ".md")]
+        files = [f for f in files if os.path.splitext(f)[1].lower() in (".csv", ".xlsx", ".txt", ".md", ".pdf")]
         files = sorted(set(files))
     else:
         files = [args.input]
